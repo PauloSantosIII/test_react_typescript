@@ -7,7 +7,8 @@ import { Form } from 'semantic-ui-react';
 import { requestUserInfo } from '../../redux/actions/session';
 
 import { Container } from '../../styles/container';
-import { ButtonForm, LinkForm } from '../../styles/form';
+import { Aside } from '../../styles/aside';
+import { ButtonForm, ContainerForm, Error } from '../../styles/form';
 import FormField from '../form';
 
 interface IFormInputs {
@@ -17,7 +18,7 @@ interface IFormInputs {
 }
 
 const Login: React.FC = () => {
-  const { register, handleSubmit } = useForm<IFormInputs>();
+  const { register, handleSubmit, errors } = useForm<IFormInputs>();
   const dispatch = useDispatch();
   const [requestError, setRequestError] = useState('');
   const history = useHistory();
@@ -39,42 +40,49 @@ const Login: React.FC = () => {
 
   return (
     <Container>
-      <h1>Olá, seja bem-vindo!</h1>
-      <p>Para acessar a plataforma, faça seu login.</p>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          required
-          name="email"
-          type="email"
-          label="E-Mail"
-          inputPlace="Digite seu E-Mail"
-          inputRef={register({
-            required: 'E-mail é obrigatório',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Isso não se parece com um e-mail!',
-            },
-          })}
-        />
-        <FormField
-          required
-          name="password"
-          type="password"
-          label="Senha"
-          inputPlace="Digite sua Senha"
-          inputRef={register({
-            required: 'Senha Necessária',
-            minLength: {
-              value: 6,
-              message: 'Senha muito curta!',
-            },
-          })}
-        />
-        <ButtonForm type="submit">Fazer Login</ButtonForm>
-      </Form>
-      <LinkForm to="/register">
-        <h3> Não possui conta? Registrar-se </h3>
-      </LinkForm>
+      <Aside />
+      <ContainerForm>
+        <h1>Olá, seja bem-vindo!</h1>
+        <p>Para acessar a plataforma, faça seu login.</p>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            required
+            name="e-mail"
+            type="e-mail"
+            label="E-Mail"
+            inputPlace="user.name@mail.com"
+            inputRef={register({
+              required: 'E-mail é obrigatório',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Digite um e-mail válido;',
+              },
+            })}
+            error={errors.email}
+          />
+          <FormField
+            required
+            name="password"
+            type="password"
+            label="Senha"
+            inputPlace="*******"
+            inputRef={register({
+              required: 'Senha Necessária',
+              minLength: {
+                value: 6,
+                message: 'Senha muito curta!',
+              },
+            })}
+            error={errors.password}
+          />
+          <ButtonForm type="submit">ENTRAR</ButtonForm>
+        </Form>
+        <h6>
+          Esqueceu seu login ou senha? <br />
+          Clique <a href="/register">aqui</a>
+        </h6>
+        <Error>{requestError}</Error>
+      </ContainerForm>
     </Container>
   );
 };

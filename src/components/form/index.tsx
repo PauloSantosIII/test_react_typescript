@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 import { Form } from 'semantic-ui-react';
+import { LabelForm, InputForm } from '../../styles/form';
 
 interface Props {
   required: boolean;
@@ -8,6 +10,7 @@ interface Props {
   label: string;
   inputPlace: string;
   inputRef: any;
+  error: any;
 }
 
 const FormField: React.FunctionComponent<Props> = ({
@@ -17,11 +20,18 @@ const FormField: React.FunctionComponent<Props> = ({
   label,
   inputPlace,
   inputRef,
+  error,
 }: Props) => {
   return (
     <Form.Field required={required}>
-      <label htmlFor={name}>{label}</label>
-      <input name={name} type={type} placeholder={inputPlace} ref={inputRef} />
+      <LabelForm htmlFor={name}>{label}</LabelForm>
+      <InputForm
+        name={name}
+        type={type}
+        placeholder={inputPlace}
+        ref={inputRef}
+      />
+      {error && <p style={{ color: 'red' }}> {error} </p>}
     </Form.Field>
   );
 };

@@ -6,7 +6,7 @@ export default createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        
+
     }
     html, body{
         max-height: 100vh;
@@ -16,11 +16,13 @@ export default createGlobalStyle`
     }
     body {
         background-color: #fff;
-        color: var(--primary-dark);
+        font-family: 'Roboto', sans-serif;
     }
     :root{
         --primary: #9d4fae;
-        --font-color: #a5a5c1;
         --secondary: #3a3d73;
+        --font-color: #383e71;
+        --color: #989fdb;
+        --bgcolor: #fff;
     }
 `;
